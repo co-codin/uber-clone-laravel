@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\LoginNeedsVerification;
 use Illuminate\Http\Request;
 
 // lazy to build form request , need to finish it fast
@@ -22,7 +23,7 @@ class LoginController extends Controller
             return response()->json(['message' => 'Could not process a user with that phone number.'], 401);
         }
 
-        $user->notify();
+        $user->notify(new LoginNeedsVerification());
     }
 
     public function verify(Request $request)
